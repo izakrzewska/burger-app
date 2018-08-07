@@ -6,12 +6,12 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 const burger = (props) => {
 
 	let transformedIngredients = Object.keys(props.ingredients) // make an array of arrays of ingredients
-		.map(igKey => { 
-			return [...Array(props.ingredients[igKey])].map((_, i) => { 
+		.map(igKey => {
+			return [...Array(props.ingredients[igKey])].map((_, i) => {
 				return <BurgerIngredient key={igKey + i} type={igKey}/>;
-			}); 
+			});
 		})
-		.reduce((arr, el) => { // make one ingredients array to know the length of it (to check if it's empty or not) 
+		.reduce((arr, el) => { // make one ingredients array to know the length of it (to check if it's empty or not)
 			return arr.concat(el)
 		}, []);
 
