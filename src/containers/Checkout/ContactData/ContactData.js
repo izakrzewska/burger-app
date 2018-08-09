@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import axios from '../../../axios-orders';
+import { connect } from 'react-redux';
 
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -111,7 +112,7 @@ class ContactData extends Component {
     }
 
 		const order = {
-			ingredients: this.props.ingredients,
+			ingredients: this.props.ings,
 			price: parseFloat(this.props.price).toFixed(2),
       orderData: formData
 		}
@@ -131,23 +132,34 @@ class ContactData extends Component {
   }
 
   checkValidity(value, rules) {
-    let isValid = false;
+      let isValid = true;
+      if (!rules) {
+          return true;
+      }
 
-    if (rules) {
       if (rules.required) {
-        isValid = value.trim() !== '';
+          isValid = value.trim() !== '' && isValid;
       }
 
       if (rules.minLength) {
-        isValid = value.length >=rules.minLength  && isValid;
+          isValid = value.length >= rules.minLength && isValid
       }
 
       if (rules.maxLength) {
-        isValid = value.length <= rules.maxLength  && isValid;
+          isValid = value.length <= rules.maxLength && isValid
       }
-    }
 
-    return isValid;
+      if (rules.isEmail) {
+          const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+          isValid = pattern.test(value) && isValid
+      }
+
+      if (rules.isNumeric) {
+          const pattern = /^\d+$/;
+          isValid = pattern.test(value) && isValid
+      }
+
+      return isValid;
   }
 
   inputChangedHandler = (e, inputIdentifier) => {
@@ -164,7 +176,6 @@ class ContactData extends Component {
     let formIsValid = true;
 
     for (let inputIdentifier in updatedOrderForm) {
-      console.log()
       formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
     }
 
@@ -198,7 +209,7 @@ class ContactData extends Component {
             touched={formElement.config.touched}
             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
         ))}
-        <Button type="submit" btnType="Success" disabled={!this.state.formIsValid}>Order</Button>
+        <Button btnType="Success" disabled={!this.state.formIsValid}>Order</Button>
       </form>
     );
 
@@ -208,11 +219,18 @@ class ContactData extends Component {
 
     return (
       <div className={classes.ContactData}>
-        <h4>Entry your contact data</h4>
+        <h4>Enter your contact data</h4>
         {form}
       </div>
     )
   }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice
+  }
+}
+
+export default connect(mapStateToProps)(ContactData);
