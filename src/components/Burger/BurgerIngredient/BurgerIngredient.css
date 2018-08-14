@@ -41,7 +41,7 @@
     transform: rotate(60deg);
     box-shadow: inset -1px 2px #c9c9c9;
   }
-  
+
 .Seeds1:before {
     content: "";
     width: 100%;
@@ -66,7 +66,7 @@
     transform: rotate(10deg);
     box-shadow: inset -3px 0 #c9c9c9;
   }
-  
+
   .Seeds2:before {
     content: "";
     width: 100%;
@@ -79,9 +79,9 @@
     transform: rotate(90deg);
     box-shadow: inset 1px 3px #c9c9c9;
   }
-  
 
-.Meat {
+
+.Falafel {
     width: 80%;
     height: 8%;
     background: linear-gradient(#7f3608, #702e05);
@@ -105,9 +105,10 @@
     border-radius: 20px;
 }
 
-.Bacon {
-    width: 80%;
+.Tomato {
+    width: 60%;
     height: 3%;
     background: linear-gradient(#bf3813, #c45e38);
     margin: 2% auto;
+    border-radius: 20px;
 }

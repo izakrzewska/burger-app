@@ -80,7 +80,7 @@ export class BurgerBuilder extends Component { // export for testing purposes
                 purchaseCancelled={this.purchaseCancelHandler}
                 purchaseContinued={this.purchaseContinueHandler} />;
         }
-        // {salad: true, meat: false, ...}
+        // {salad: true, falafel: false, ...}
         return (
             <Aux>
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
